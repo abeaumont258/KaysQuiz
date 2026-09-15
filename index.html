@@ -1,0 +1,53 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Hi Kayleigh 💕</title><style>
+*{box-sizing:border-box}html,body{margin:0;padding:0;background:#160812;color:#fff;font-family:Georgia,serif}.home{position:relative;width:100%;line-height:0}.home img{display:block;width:100%;height:auto}.start{position:absolute;left:25%;top:67.5%;width:50%;height:7%;border:0;background:transparent;cursor:pointer;border-radius:999px;z-index:10;padding:0}.start:focus-visible{outline:3px solid white}.screen{display:none;min-height:100svh;padding:24px;align-items:center;justify-content:center;background:linear-gradient(rgba(22,8,18,.38),rgba(22,8,18,.38)),url('assets/homepage.png') center/cover fixed no-repeat}.card{width:min(900px,92vw);padding:clamp(28px,5vw,65px);border-radius:30px;background:rgba(25,4,18,.78);box-shadow:0 20px 70px rgba(0,0,0,.45);text-align:center}.num{color:#ffd5e9;font-size:clamp(17px,2vw,26px);letter-spacing:.08em;text-transform:uppercase;margin:0 0 22px}.q{font-size:clamp(29px,5vw,60px);line-height:1.14;margin:0 auto 38px}.answers{display:flex;gap:20px;justify-content:center;flex-wrap:wrap}.answer{min-width:190px;padding:17px 38px;border:2px solid #fff;border-radius:999px;background:#e7317d;color:#fff;font:bold 23px Arial,sans-serif;cursor:pointer}.slip{display:none;font-size:clamp(20px,2.5vw,30px);line-height:1.35;margin:-10px auto 25px;color:#ffe7f4}.final{align-items:flex-start}.final .card{max-height:92svh;overflow:auto;text-align:left}.final .num{text-align:center}.final p{font-size:clamp(17px,2vw,23px);line-height:1.52;margin:0 0 15px}.fade{animation:fade .3s ease}@keyframes fade{from{opacity:0;transform:scale(.985)}to{opacity:1;transform:scale(1)}}
+</style></head><body>
+<div class="home" id="home"><img src="assets/homepage.png" alt="Romantic welcome screen"><button id="start" class="start" aria-label="Let's go"></button></div><main id="app"></main>
+<script>
+const questions=[
+'Do you enjoy spending time together?',
+'Has your heart got enough space left, to let me back in and give me another chance?',
+'Do you ever think about me, or us, when we are not together?',
+'Do you want to stop going around in circles with me, and grow with me instead?',
+'I know I can annoy you sometimes, but do I make you smile more than I don\'t?',
+'Do you think you can take a breath, and start repairing the hurt, instead of walking away?',
+'Do you think, with strong actions from me, you can stop doubting me and trust me again instead?',
+'Do you think you\'ll be hungry tomorrow about 10am, so I can take you out for breakfast?',
+'Do you think you\'re anywhere near as pretty and amazing as I see you through my eyes?',
+'Do you think we can undo the past, and make our future better than ever before?',
+'Have you ever felt this loved and cared for in any other relationship?',
+'Do you think you\'re ready for Question 13?',
+'Have you got your glasses on? 👓',
+'Do you really want to just give up?'
+];
+const app=document.getElementById('app');
+questions.forEach((text,i)=>{
+  const n=i+1;
+  const buttons=n===14
+    ? `<button class="answer" type="button" data-answer="no" data-n="14">NO 🙄</button><button class="answer" type="button" data-answer="never" data-n="14">NEVER ❤️</button>`
+    : `<button class="answer" type="button" data-answer="yes" data-n="${n}">YES ❤️</button><button class="answer" type="button" data-answer="no" data-n="${n}">NO 🙄</button>`;
+  app.insertAdjacentHTML('beforeend',`<section class="screen" id="q${n}"><div class="card"><p class="num">Question ${n} 💕</p><h1 class="q">${text}</h1><p class="slip" id="slip${n}"><strong>Uh oh! 😂</strong><br>Your finger must have slipped!<br>I've fixed it for you...</p><div class="answers" id="ans${n}">${buttons}</div></div></section>`);
+});
+app.insertAdjacentHTML('beforeend',`<section class="screen final" id="final"><div class="card"><p class="num">For Kayleigh ❤️</p><div><p><strong>Kay,</strong></p><p>I'm really serious about us.</p><p>I understand why you're scared — and I am too... just the opposite of what you're scared of.</p><p>I'm scared of losing you, and you're scared we will end up back in the same place.</p><p>I love you, Kayleigh, with all of my heart.</p><p>I heard what you told me yesterday, and honestly, I understand why and how you reached this point. I am still asking for a chance though — not to repeat history, but to grow and improve our relationship.</p><p>What we have is real — and I can feel every emotion, whether it's good or bad. I really feel every single bit.</p><p>I don't want to lose you, Kay. I can't lose you... not like this.</p><p>I know that if there's love there — which there is! — there's always a chance, Kay.</p><p>Now, I'm not treating this as a <em>"maybe this time we'll get it right"</em> situation.</p><p><strong>I will get it right.</strong></p><p>I will step up, and I will make sure you never, ever have to doubt me or us again.</p><p>All I need is a chance to prove it.</p><p>Taking each step at a time... growing, learning, and not losing each other.</p><p><strong>From the bottom of my heart, I love you. ❤️</strong></p><p>Your (sometimes annoying) Ant<br>xxxxxxxxxx</p></div></div></section>`);
+function show(id){document.querySelectorAll('.screen').forEach(x=>x.style.display='none');const el=document.getElementById(id);el.style.display='flex';el.classList.remove('fade');void el.offsetWidth;el.classList.add('fade');window.scrollTo({top:0,behavior:'instant'});}
+
+document.getElementById('start').onclick=()=>{document.getElementById('home').style.display='none';show('q1');};
+app.addEventListener('click',e=>{
+  const b=e.target.closest('[data-answer]');
+  if(!b)return;
+  const n=Number(b.dataset.n);
+  const answer=b.dataset.answer;
+  if(n===14){show('final');return;}
+  if(n===11&&b.dataset.forced==='true'){show('q12');return;}
+  if(n===11&&answer==='yes'){
+    document.getElementById('slip11').style.display='block';
+    document.getElementById('ans11').innerHTML=`<button class="answer" type="button" data-answer="no" data-n="11" data-forced="true">NO 🙄</button><button class="answer" type="button" data-answer="no" data-n="11" data-forced="true">NO 🙄</button>`;
+    return;
+  }
+  if(answer==='no'){
+    document.getElementById('slip'+n).style.display='block';
+    document.getElementById('ans'+n).innerHTML=`<button class="answer" type="button" data-answer="yes" data-n="${n}">YES ❤️</button><button class="answer" type="button" data-answer="yes" data-n="${n}">YES ❤️</button>`;
+  }else{
+    show('q'+(n+1));
+  }
+});
+</script></body></html>
